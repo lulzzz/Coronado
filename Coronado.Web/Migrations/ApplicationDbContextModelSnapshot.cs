@@ -3,8 +3,8 @@ using System;
 using Coronado.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Coronado.Web.Migrations
 {
@@ -15,9 +15,9 @@ namespace Coronado.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Coronado.Web.Domain.Account", b =>
                 {
@@ -79,8 +79,8 @@ namespace Coronado.Web.Migrations
                     b.ToTable("categories");
 
                     b.HasData(
-                        new { CategoryId = new Guid("cf22c203-1388-45a8-81d1-3e7d48521fd9"), Name = "Starting Balance", Type = "Income" },
-                        new { CategoryId = new Guid("732205d4-e909-41da-9d77-b1b1f6e8dd6a"), Name = "Bank Fees", Type = "Expense" }
+                        new { CategoryId = new Guid("33dfb808-16a8-4ed8-8604-4a1f4b58ff4e"), Name = "Starting Balance", Type = "Income" },
+                        new { CategoryId = new Guid("e59f04a7-db87-4854-b6dd-a7c5d651b827"), Name = "Bank Fees", Type = "Expense" }
                     );
                 });
 
@@ -314,7 +314,8 @@ namespace Coronado.Web.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("role_name_index");
+                        .HasName("role_name_index")
+                        .HasFilter("[normalized_name] IS NOT NULL");
 
                     b.ToTable("asp_net_roles");
                 });
@@ -323,7 +324,8 @@ namespace Coronado.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnName("claim_type");
@@ -405,7 +407,8 @@ namespace Coronado.Web.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("user_name_index");
+                        .HasName("user_name_index")
+                        .HasFilter("[normalized_user_name] IS NOT NULL");
 
                     b.ToTable("asp_net_users");
                 });
@@ -414,7 +417,8 @@ namespace Coronado.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnName("claim_type");

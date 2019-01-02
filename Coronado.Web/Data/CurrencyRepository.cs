@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data;
-using Npgsql;
 using Coronado.Web.Domain;
+using System.Data.SqlClient;
 
 namespace Coronado.Web.Data
 {
@@ -25,7 +25,7 @@ namespace Coronado.Web.Data
         {
             get
             {
-                return new NpgsqlConnection(_connectionString);
+                return new SqlConnection(_connectionString);
             }
         }
 
