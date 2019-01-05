@@ -60,6 +60,11 @@ namespace Coronado.Web
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddAuthentication().AddGoogle(options => {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+
             services.AddMvc()
                 .AddJsonOptions(options => 
                 {

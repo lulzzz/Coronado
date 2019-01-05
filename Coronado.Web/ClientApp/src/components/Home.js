@@ -13,12 +13,7 @@ class Home extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-
-  }
-
   render() {
-    console.log(this.props.accounts);
     var bankAccounts = filter(this.props.accounts, a => a.accountType === 'Bank Account' || a.accountType === 'Cash');
     var creditCards = filter(this.props.accounts, a => a.accountType === 'Credit Card');
     var mortgages = filter(this.props.accounts, a => a.accountType === 'Mortgage');
