@@ -60,10 +60,12 @@ namespace Coronado.Web
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddAuthentication().AddGoogle(options => {
-                options.ClientId = Configuration["Authentication:Google:ClientId"];
-                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            });
+            services.AddAuthentication()
+                .AddGoogle(options => {
+                    options.ClientId = Configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddJwtBearer;
 
             services.AddMvc()
                 .AddJsonOptions(options => 
@@ -97,6 +99,14 @@ namespace Coronado.Web
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+            app.Use(async (context, next) => {
+               if (!context.User.Identity.IsAuthenticated)
+               {
+                   await context.ChallengeAsync();
+               } else {
+                   await next();
+               }
+            } );
             app.UseSpa(spa => {
                 spa.Options.SourcePath = "ClientApp";
 

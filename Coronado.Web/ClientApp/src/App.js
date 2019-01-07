@@ -25,9 +25,27 @@ class App extends Component {
     }
   }
 
-  googleResponse = (e) => { 
-    console.log(e);
-    this.setState({isAuthenticated: true});
+  googleResponse = (response) => { 
+    console.log(response);
+    
+    const payLoad = {
+      accessToken: response.accessToken,
+      email: response.w3.U3,
+      name: response.w3.ig
+    }
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(payLoad)
+    }
+    fetch('/api/auth/google', options)
+      .then(r => {
+        const token = r.headers.get('x-auth-token');
+        r.json().then(user => {
+          if (token) {
+            this.setState({isAuthenticated: true, user, token});
+          }
+        });
+      });
   };
 
   render() {

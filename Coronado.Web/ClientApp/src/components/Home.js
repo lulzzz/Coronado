@@ -24,7 +24,7 @@ class Home extends React.Component {
       <div>
         <h1>Coronado Financial App for Me</h1>
         <Row>
-          <Col sm={3}>
+          <Col sm={4}>
             <h4>Liquid assets</h4>   
             <h4>Credit cards</h4>
             <h4>Mortgages</h4>
@@ -39,7 +39,7 @@ class Home extends React.Component {
             <h4 style={{textAlign: "right"}}>{Currency(ccTotal)}</h4>
             <h4 style={{textAlign: "right"}}>{Currency(mortgageTotal)}</h4>
           </Col>
-          <Col sm={7}></Col>
+          <Col sm={6}></Col>
         </Row>
       </div>
   )}
